@@ -1,8 +1,8 @@
 
 document.addEventListener("DOMContentLoaded", function() {
     const APIUrl = "https://thronesapi.com/api/v2/Characters";
-    const selectElement = document.getElementById("characters");
-    const charactersImg = document.getElementById("character-image");
+    const selectElement = document.getElementById("character-list");
+    const charactersImg = document.querySelector(".character-image");
     
     async function fetchCharacters (){
         try {
@@ -16,10 +16,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 function populateSelect (characters) {
-    characters.forEach(character => {
+
+    const defaultOption = document.createElement("option");
+    defaultOption.textContent = "Select a character";
+    defaultOption.value = "";
+    selectElement.appendChild(defaultOption);
+
+    characters.forEach (character => {
         const option = document.createElement("option");
         option.value =  character.imageUrl;
-        option .textContent = character.fullName;
+        option.textContent = character.fullName;
         selectElement.appendChild(option);
     });
 }
@@ -29,6 +35,8 @@ selectElement.addEventListener("change", function() {
     if (selectedImageUrl) {
         charactersImg.src = selectedImageUrl;
         charactersImg.style.display = "block";
+    } else {
+        charactersImg.style.display = "none";
     }
 
 });
